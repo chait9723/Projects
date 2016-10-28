@@ -101,6 +101,7 @@
     <Content Include="images\starbucks4.jpg" />
     <Content Include="images\starbucks5.jpg" />
     <Content Include="images\starbucks6.jpg" />
+    <Content Include="js1.js" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
