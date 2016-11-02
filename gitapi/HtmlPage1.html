@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>hai</title>
+  
+
+    <script src="scripts/jquery-3.1.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var k = '';
+            var m = '';
+            var n = '';
+            $.ajax({
+                url: 'https://api.github.com/search/users?search=followers&q=users',
+                method: 'get',
+                dataType: 'json',
+                success: function (data) {
+                   
+                    for (var i = 0; i <= 5; i++) {
+                        k += '<tr><td>' + (i + 1) + '</td>';
+                        k += '<td>' + data.items[i].id + '</td>';
+                        var m = 'https://api.github.com/users/' + data.items[i].login;
+                        
+                        call2(m).done(function (data1) { n = data1.name; });
+                       
+                       k+= '<td>'+n+'</td>';
+                        k += '<td>' + data.items[i].login + '</td>';
+                        k += '<td><img src=' + data.items[i].avatar_url + ' height=100 width=100/></td></tr>';
+                      
+                    }
+                    $('#123').html(k);
+                    console.log(k);
+                },
+                error:function(data){
+                    alert("no");
+                }
+
+            })
+
+
+        })
+        function call2( m) {
+         var result='';
+          return  $.ajax({
+                url:m,
+                method: 'GET',
+                dataType: 'json',
+              async:false,
+                success: function (data) {
+                    result=data.name;
+                    //alert(data.name)
+                    
+                }, error: function (data) {
+                    result = 'no';
+                }
+
+            });
+            //return result;
+        }
+    </script>
+        
+	<meta charset="utf-8" />
+</head>
+<body>
+    hai
+    <div id="one">
+        <table  border="1">
+            <thead>
+                <tr>
+                    <th>no</th>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>user name</th>
+                    <th>user image</th>
+                </tr>
+               
+            </thead>
+            <tbody id="123"></tbody>
+        </table>
+    </div>
+    <img id="im" />
+</body>
+</html>
