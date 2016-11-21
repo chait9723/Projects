@@ -1,7 +1,7 @@
 ﻿
-function gitapi()
-{
-    var req = XMLHttpRequest();
-    req.open('get','',true);
+//function gitapi()
+//{
+//    var req = XMLHttpRequest();
+//    req.open('get','',true);
 
-}
+//}
