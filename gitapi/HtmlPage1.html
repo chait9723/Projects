@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>hai</title>
+    <title>Github</title>
   
 
     <script src="scripts/jquery-3.1.1.js"></script>
@@ -24,10 +24,10 @@
             //    call1('https://api.github.com/search/users?q=user');
             //})
 
-            $('#users').click(function () {
+            //$('#users').click(function () {
 
-                call1('https://api.github.com/search/users?q=user');
-            });
+            //    call1('https://api.github.com/search/users?q=');
+            //});
             $('#hot_repo').click(function () {
                 call3('https://api.github.com/search/repositories?q=user&sort=stars&order=desc');
             });
@@ -41,7 +41,7 @@
               async:false,
                 success: function (data) {
                     result=data.name;
-                    return result.name;
+                    return result;
                     
                 }, error: function (data) {
                     result = 'no';
@@ -50,37 +50,73 @@
             });
             //return result;
         }
-        function call1(e,u) {
-            var k = '<thead ><tr><th>no</th><th>id</th><th>Github name</th><th>user name</th><th>user image</th></tr></thead>';
+        function call1(e, u) {
+            $('#123').hide();
+            $('#111').show();
+            var k = '';
             var n = '';
             var m = '';
             var dd;
             if ($('#inp').val())
-                dd = $('#inp').val();
+                dd = u+$('#inp').val();
             else
-                dd = 'user';
-            alert(dd);
+                dd = u+'user';
+          
+           
+           
             $.ajax({
-                url: 'https://api.github.com/search/users?q='+dd,
+                url: dd,
                 method: 'get',
                 dataType: 'json',
                 success: function (data) {
-
-                    for (var i = 0; i <= 4; i++) {
-                        k += '<tr><td>' + (i + 1) + '</td>';
-                        k += '<td>' + data.items[i].id + '</td>';
-                        var m = 'https://api.github.com/users/' + data.items[i].login;
+                    $('#111').dataTable().fnDestroy();
+                    $('#111').dataTable({
                         
-                        call2(m).done(function (data1) { n = data1.name; });
+                        data: data.items,
 
-                        k += '<td>' + data.items[i].login + '</td>';
-                        k += '<td>' + n + '</td>';
-                        k += '<td><img src=' + data.items[i].avatar_url + 'class=img-circle height=100 width=100/></td></tr>';
+                        columns: [
+                            {
+                                data: 'id'
+                               },
+                            { data: 'login' },
+                            {
+                                data: 'login',
+                                render: function (data, type, row) {
+                                    return call2('https://api.github.com/users/' + data).responseJSON.name;
 
-                    }
-                    $('#123').html(k);
-                    console.log(k);
-                },
+                                }
+                            },
+
+                            //{ data: 'name' }
+                           {
+                               data: 'avatar_url',
+                                render: function (data) {
+                                    return '<img src="' + data + '"width=100 height=100 />';
+
+                                }
+                            }
+
+                                //'render': function (items) {
+                                //    return items.id;}
+                        ]
+                    });
+
+                //    for (var i = 0; i <= 4; i++) {
+                //        k += '<tr><td>' + (i + 1) + '</td>';
+                //        k += '<td>' + data.items[i].id + '</td>';
+                //        var m = 'https://api.github.com/users/' + data.items[i].login;
+                        
+                //        call2(m).done(function (data1) { n = data1.name; });
+
+                //        k += '<td>' + data.items[i].login + '</td>';
+                //        k += '<td>' + n + '</td>';
+                //        k += '<td><img src=' + data.items[i].avatar_url + 'class=img-circle height=100 width=100/></td></tr>';
+
+                //    }
+                //    $('#td111').html(k);
+                //    console.log(k); 
+                        //
+                    },
                 error: function (data) {
                     alert("no");
                 }
@@ -120,8 +156,9 @@
                         //k.append( '<td>' + n + '</td>');
                         //k.append('<td>'+data.items[i].description+'</td>');
                         //k.append( '<td><img src=' + data.items[i].owner.avatar_url + 'class=img-rounded height=100 width=100/></td></tr>');
-
-                        $('#123').dataTable({
+                    $('#123').show();
+                    $('#111').hide();
+                    $('#123').dataTable({
                             data: data.items,
                            
                             columns: [
@@ -148,18 +185,18 @@
                                     //    return items.id;}
                                     ]
                         });
-                        console.log(data.items);
+                        //console.log(data.items);
                         //oo.fnAddData([data.items[i].id, data.items[i].owner.login, data.items[i].stargazers_count, data.items[i].owner.login, n, data.items[i].description, '<img src=' + data.items[i].owner.avatar_url + ' height=100 width=100/>']);
                         //oo.add('<td><img src=' + data.items[i].owner.avatar_url + ' height=100 width=100/></td>');
 
 
 
                         //$('#123').html(k);
-                        console.log(k);
+                        //console.log(k);
                     
                 },
                 error: function (data) {
-                    alert("no");
+                    alert("Unable to load the data");
                 }
 
             });
@@ -169,7 +206,7 @@
         
 	<meta charset="utf-8" />
 </head>
-<body>
+<body >
     <!--<div id="one" class="container">-->
         <!--<div class="table-responsive jumbotron">-->
             <!--<div class="row">
@@ -181,12 +218,13 @@
                 ...
             </div>-->
     <div class="jumbotron"><center>
-    <p class="navbar-text"><h2>Github Page</h2></p>
-    <input type="text" id="inp" onkeyup="call1(event,'https://api.github.com/search/users?q=user')" />
-    <button id="users" value="Users" class="btn btn-primary">users</button>
-    <input type="button" id="hot_repo" value="Repsoitories" class="btn btn-primary" />
+    <p class="navbar-text"><h2>  <img src="GitHub.jpg"  width="300" height="100"/></h2></p>
+    <input type="text" id="inp" onkeyup="call1(event,'https://api.github.com/search/users?q=')" />
+    <button id="users" value="Users" class="btn btn-primary" onclick="call1(event, 'https://api.github.com/search/users?q=')">users</button>
+    <input type="button" id="hot_repo" value="Repsoitories" class="btn btn-primary" /><!---->
 </center>
-            <table class="table table-hover table-bordered" id="123"><thead id="th123"><tr><th>id</th><th>stars</th><th>user name</th><th>repo name</th><th>description</th><th style="width:10px;height:10px;">Images</th></tr></thead><tbody id="td123"></tbody></table>
+        <table class="table table-hover table-bordered" id="111" style="display:none" ><thead id="th111" ><tr><th>id</th><th>Github name</th><th>User  Name</th><th style="width:10px;height:10px;">Images</th></tr></thead><tbody id="td111"></tbody></table>
+            <table class="table table-hover table-bordered" id="123" style="display:none"><thead id="th123" ><tr><th>id</th><th>stars</th><th>user name</th><th>repo name</th><th>description</th><th style="width:10px;height:10px;">Images</th></tr></thead><tbody id="td123"></tbody></table>
         </div>
     <img id="im" />
 </body>
