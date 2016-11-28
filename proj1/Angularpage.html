@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Coffee Shop</title>
+    <style>
+        div {
+            width: 200px;
+            border: 1px solid green;
+            padding:75px;
+            background-color: lavender;
+            display:inline-block;
+        }
+    </style>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script >
+        //function dor() {
+        //    var z = document.getElementsByTagName('span');
+        //    var a = document.getElementsByTagName('input');
+        //    var d=0.0;
+
+        //    for (var i = 0; i < z.length; i++)
+        //    {
+        //        var x = ((z[i].innerText||z[i].textContent).substr(0,4));
+        //        var m = (a[i].value);
+        //        if (m > 0)
+        //            d += (x * m);
+
+
+        //    }
+
+        //document.getElementById('total').innerText = "Total=" + d.toFixed(2)+ "$";
+        //}
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function ($scope) {
+           
+            $scope.rat = [
+                {
+                    name: "Hot Choclate Mokka ",
+                    price: "3.15",
+                    img: "images/starbucks1.jpg",
+                    value:"",
+                }, {
+                    name: "Cold Mokka",
+                    price: "2.15",
+                    img: "images/starbucks2.jpg",
+                    value: "",
+                }, {
+                    name: "Capachino",
+                    price: "3.19",
+                    img: "images/starbucks3.jpg",
+                    value: "",
+                }, {
+                    name: "starwberry Shake",
+                    price: "4.15",
+                    img: "images/starbucks4.jpg",
+                    value: "",
+                }, {
+                    name: "Green Mokka",
+                    price: "5.15",
+                    img: "images/starbucks5.jpg",
+                    value: "",
+                }, {
+                    name: "Hot Mokka",
+                    price: "3.17",
+                    img: "images/starbucks6.jpg",
+                    value: "",
+                }
+            ];
+            $scope.tax = "";
+            $scope.change = function () {
+                
+                var total = 0;
+                for (var i = 0; i < $scope.rat.length; i++)
+                {
+                    total += ($scope.rat[i].price * $scope.rat[i].value);
+                   
+                }
+                var n = (total).toFixed(2);
+                $scope.tot = n;
+                var p = (n * (0.06));
+                $scope.tax = (p).toFixed(2);
+                var k = (n*1 + (p*1));
+                return k;
+                //return ($scope.hot_Mokka*1) +( $scope.cold_Mokka*1) + ($scope.capachino*1) + ($scope.strawberry*1) + ($scope.green_Mokka*1) + ($scope.choclate_Mokka*1);
+            }
+        });
+
+    </script>
+    <meta charset="utf-8" />
+</head>
+<body style="background-color:burlywood" class="middle" ng-app="myApp" ng-controller="myCtrl">
+
+    <br />
+    <center>
+        <center><h1>Chaitanya Starbucks</h1></center>
+        <img src="images/starbucks.jpg" alt="Html5 " height="200" width="600" />
+        <br />
+        <br />
+        <div  class="Left" id="1" data-myval="12" ng-repeat="r in rat"><span >
+              
+                
+                    <p><h3>{{r.name}}</h3> </p>
+                     <img src={{r.img}} alt="Html5 " height="175" width="175" /><br />
+                    <span id="d1"><b>{{r.price|currency}}</b></span>
+                    <br /><input type="number" id="n1" style="text-align: center" ng-model="r.value" min="0" max="99" />
+
+            
+       
+            </span>
+        </div>
+      
+        <!--<div class="Left" id="1" data-myval="10">
+            <center>
+                <p><h4>Hot Choclate Mokka</h4> </p>
+
+
+                <img src="images/starbucks1.jpg" alt="Html5 " height="100" width="100" /><br />
+                <span id="d1"><b>3.15$</b></span>
+                <br /><input type="number" id="n1" style="text-align: center" ng-model="choclate_Mokka" />
+
+            </center>
+        </div>
+        <div class="middle" id='2' data-myval="12">
+            <center>
+                <p><h4>Cold Mokka</h4> </p>
+
+                <img src="images/starbucks2.jpg" alt="Html5 " height="100" width="100" /><br />
+                <span id="d2"><b>2.15$</b></span>
+                <br /><input type="number" id="n2" style="text-align: center" ng-model="cold_Mokka" />
+            </center>
+        </div>
+        <div class="right">
+            <center>
+                <p><h4>Capachino</h4> </p>
+
+                <img src="images/starbucks3.jpg" alt="Html5 " height="100" width="100" /><br />
+                <span id="d3"><b>3.19$</b></span>
+                <br /><input type="number" id="n3" style="text-align: center" ng-model="capachino"/>
+            </center>
+        </div>
+        <br />
+        <br />
+        <div>
+            <center>
+                <p><h4>starwberry Shake</h4> </p>
+
+                <img src="images/starbucks4.jpg" alt="Html5 " height="100" width="100" /><br />
+                <span id="d4"><b>4.15$</b></span>
+                <br /><input type="number" id="n4" style="text-align: center" ng-model="strawberry" />
+            </center>
+        </div>
+        <div>
+            <center>
+                <p><h4>Green Mokka</h4> </p>
+
+                <img src="images/starbucks5.jpg" alt="Html5 " height="100" width="100" /><br />
+                <span id="d5"><b>5.15$</b></span>
+                <br /><input type="number" id="n5" style="text-align: center" ng-model="green_Mokka"/>
+            </center>
+
+        </div>
+        <div>
+            <center>
+                <p><h4>Hot Mokka</h4> </p>
+
+                <img src="images/starbucks6.jpg" alt="Html5 " height="100" width="100" /><br />
+                <span id="d6"><b>3.17$</b></span>
+                <br /><input type="number" id="n6" style="text-align: center" ng-model="hot_MOkka" />
+            </center>
+
+        </div>
+        <br />
+
+        <button onclick="dor()">Click</button>
+        <label id="total">{{change()|currency}}</label>-->
+        <div style="background-color:white">
+            <br />
+            <label>Amount :{{tot|currency}}</label><br /><label>Tax:{{tax|currency}}</label><br />
+            <label>Total:{{change()|currency}}</label>
+        </div>
+    </center>
+   
+</body>
+</html>
